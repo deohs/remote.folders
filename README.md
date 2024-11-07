@@ -99,7 +99,7 @@ can use code like this in your R scripts:
 # Attach packages, installing as needed
 if(!requireNamespace('pacman', quietly = TRUE)) install.packages('pacman')
 pacman::p_load(folders)
-pacman::p_install_gh("deohs/remote.folders")
+pacman::p_load_gh("deohs/remote.folders")
 
 # Read edited configuration file
 sysname <- Sys.info()[['sysname']]
