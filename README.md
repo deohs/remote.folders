@@ -32,7 +32,7 @@ This package is intended to be used with its sister package
 # Attach packages, installing as needed
 if(!requireNamespace('pacman', quietly = TRUE)) install.packages('pacman')
 pacman::p_load(folders)
-pacman::p_install_gh("deohs/remote.folders")
+pacman::p_load_gh("deohs/remote.folders")
 ```
 
 ### Example: initial rclone setup for an R project
@@ -103,6 +103,7 @@ pacman::p_load_gh("deohs/remote.folders")
 
 # Read edited configuration file
 sysname <- Sys.info()[['sysname']]
+conf <- here::here('conf', 'folders_sp.yml')
 folders <- get_folders(conf, conf_name = sysname)
 data_folder <- normalizePath(folders$data, mustWork = FALSE)
 
