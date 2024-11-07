@@ -1,0 +1,17 @@
+Package: remote.folders
+Title: Remote Folders
+Version: 0.0.1
+Authors@R: c(person("Brian", "High", email = "bhigh@live.com",
+    role = c("aut", "cre")), 
+  person("University of Washington", role = c("cph", "fnd")))
+Maintainer: Brian High <bhigh@live.com>
+URL: https://github.com/deohs/remote.folders
+BugReports: https://github.com/deohs/remote.folders/issues
+Description: Use remote folders with rclone. See also: the {folders} package.
+Depends: R (>= 4.2)
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports: stats (>= 4.4.1), utils (>= 4.4.1), jsonlite (>= 1.8.9), fs (>= 1.6.5)
+Suggests: folders (>= 0.1.0)
+NeedsCompilation: no
+RoxygenNote: 7.3.2
