@@ -77,8 +77,8 @@ data_path <- normalizePath(file.path(local_path, 'data'), mustWork = FALSE)
 
 # Create a list of rclone configuration parameters
 rclone_list <- list(remote_name = remote_name, 
-                    remote_path = remote_path, 
-                    local_path = local_path)
+                    remote_path = rclone_remote_path, 
+                    local_path = rclone_local_path)
 
 # Add the alternate data path and the rclone parameters to the folders list
 sysname <- Sys.info()[['sysname']]
@@ -116,12 +116,6 @@ write.csv(iris, file = file.path(data_folder, 'iris.csv'), row.names = FALSE)
 # Show contents of data folder
 normalizePath(list.files(data_folder, recursive = TRUE, full.names = TRUE))
 
-# Define remote, remote path and local path for rclone sync
-remote_name <- folders$rclone$remote_name
-rclone_remote_path <- fmt_rclone_remote_path(remote_name, 
-                                             folders$rclone$remote_path)
-rclone_local_path <- fmt_rclone_local_path(folders$rclone$local_path)
-
 # Sync files to remote
-rclone_sync(remote_name, rclone_local_path, rclone_remote_path)
+with(folders$rclone, rclone_sync(remote_name, local_path, remote_path))
 ```
