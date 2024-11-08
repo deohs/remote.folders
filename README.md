@@ -62,18 +62,16 @@ remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
 local_path <- fmt_rclone_local_path(local_path)
 
 # Create a list of rclone configuration parameters
-rclone_list <- tibble::lst(remote_org, remote_name, remote_path, local_path)
+rclone <- tibble::lst(remote_org, remote_name, remote_path, local_path)
 
 # Sync files from remote
-with(rclone_list, rclone_sync(remote_name, remote_path, local_path))
+with(rclone, rclone_sync(remote_name, remote_path, local_path))
 
 # Create a default list of folders
-folders_list <- list(default = get_folders(here::here('conf', 'folders.yml')))
+folders <- list(default = get_folders(here::here('conf', 'folders.yml')))
 
 # Add the alternate data path and the rclone parameters to the folders list
-sysname <- Sys.info()[['sysname']]
-folders_list[[sysname]]$data <- data_path
-folders_list[[sysname]]$rclone <- rclone_list
+folders[[Sys.info()[['sysname']]]] <- list(data = data_path, rclone = rclone)
 
 # Save the modified folder configuration to a new configuration file
 conf <- here::here('conf', 'folders_sp.yml')
