@@ -75,7 +75,7 @@ folders[[Sys.info()[['sysname']]]] <- list(data = data_path, rclone = rclone)
 
 # Save the modified folder configuration to a new configuration file
 conf <- here::here('conf', 'folders_sp.yml')
-yaml::write_yaml(folders_list, file = conf)
+yaml::write_yaml(folders, file = conf)
 ```
 
 ### Example: using rclone after configuration
