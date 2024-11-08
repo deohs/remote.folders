@@ -51,10 +51,6 @@ m365_folders <- get_m365_folders(remote_org)
 # Create folders if missing
 res <- create_folders(m365_folders)
 
-# List the folders in the top-level of the OneDrive and SharePoint folders
-list.dirs(m365_folders$onedrive, recursive = FALSE, full.names = FALSE)
-list.dirs(m365_folders$sharepoint, recursive = FALSE, full.names = FALSE)
-
 # Define local path variable
 local_path <- file.path(m365_folders$sharepoint, remote_name, remote_path)
 
