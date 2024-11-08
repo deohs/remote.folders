@@ -31,7 +31,7 @@ This package is intended to be used with its sister package
 ```
 # Attach packages, installing as needed
 if(!requireNamespace('pacman', quietly = TRUE)) install.packages('pacman')
-pacman::p_load(folders)
+pacman::p_load(folders, tibble)
 pacman::p_load_gh("deohs/remote.folders")
 ```
 
@@ -54,27 +54,21 @@ res <- create_folders(m365_folders)
 # Define local path variable
 local_path <- file.path(m365_folders$sharepoint, remote_name, remote_path)
 
-# Define remote and local paths for rclone
-rclone_remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
-rclone_local_path <- fmt_rclone_local_path(local_path)
-
-# Sync files from remote
-rclone_sync(remote_name, rclone_remote_path, rclone_local_path)
-
-# Setup folders
-conf <- here::here('conf', 'folders.yml')
-folders <- get_folders(conf)
-
-# Create a default list of folders
-folders_list <- list(default = folders)
-
 # Define an alternate data path
 data_path <- normalizePath(file.path(local_path, 'data'), mustWork = FALSE)
 
+# Format remote and local paths for rclone
+remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
+local_path <- fmt_rclone_local_path(local_path)
+
 # Create a list of rclone configuration parameters
-rclone_list <- list(remote_name = remote_name, 
-                    remote_path = rclone_remote_path, 
-                    local_path = rclone_local_path)
+rclone_list <- tibble::lst(remote_org, remote_path, local_path)
+
+# Sync files from remote
+with(rclone_list, rclone_sync(remote_name, remote_path, local_path))
+
+# Create a default list of folders
+folders_list <- list(default = get_folders(here::here('conf', 'folders.yml')))
 
 # Add the alternate data path and the rclone parameters to the folders list
 sysname <- Sys.info()[['sysname']]
