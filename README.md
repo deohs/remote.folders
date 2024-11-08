@@ -62,7 +62,7 @@ remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
 local_path <- fmt_rclone_local_path(local_path)
 
 # Create a list of rclone configuration parameters
-rclone_list <- tibble::lst(remote_org, remote_path, local_path)
+rclone_list <- tibble::lst(remote_org, remote_name, remote_path, local_path)
 
 # Sync files from remote
 with(rclone_list, rclone_sync(remote_name, remote_path, local_path))
