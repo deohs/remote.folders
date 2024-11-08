@@ -102,19 +102,17 @@ pacman::p_load(folders)
 pacman::p_load_gh("deohs/remote.folders")
 
 # Read edited configuration file
-sysname <- Sys.info()[['sysname']]
 conf <- here::here('conf', 'folders_sp.yml')
-folders <- get_folders(conf, conf_name = sysname)
-data_folder <- normalizePath(folders$data, mustWork = FALSE)
+folders <- get_folders(conf, conf_name = Sys.info()[['sysname']])
 
 # Create data folder if missing
-res <- if (!dir.exists(data_folder)) create_folders(data_folder)
+res <- create_folders(folders$data)
 
 # Save a file to the data folder
-write.csv(iris, file = file.path(data_folder, 'iris.csv'), row.names = FALSE)
+write.csv(iris, file = file.path(folders$data, 'iris.csv'), row.names = FALSE)
 
 # Show contents of data folder
-normalizePath(list.files(data_folder, recursive = TRUE, full.names = TRUE))
+fs::dir_ls(folders$data)
 
 # Sync files to remote
 with(folders$rclone, rclone_sync(remote_name, local_path, remote_path))
