@@ -26,20 +26,16 @@ pacman::p_install_gh("deohs/remote.folders")
 This package is intended to be used with its sister package 
 {[folders](https://github.com/deohs/folders/)} as follows:
 
-### Package setup
+### Example: initial rclone setup for an R project
+
+Configure your rclone paths and store them in a configuration file:
 
 ```
 # Attach packages, installing as needed
 if(!requireNamespace('pacman', quietly = TRUE)) install.packages('pacman')
 pacman::p_load(folders, tibble)
 pacman::p_load_gh("deohs/remote.folders")
-```
 
-### Example: initial rclone setup for an R project
-
-Configure your rclone paths and store them in a configuration file:
-
-```
 # Define remote path variables
 remote_org <- 'myorg'
 remote_name <- 'mygroup'
