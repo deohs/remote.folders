@@ -94,7 +94,9 @@ conf <- here::here('conf', 'folders_sp.yml')
 folders <- get_folders(conf, conf_name = Sys.info()[['sysname']])
 
 # Sync files from remote
-with(folders$rclone, rclone_sync(remote_name, remote_path, local_path))
+if ('rclone' %in% names(folders)) {
+  with(folders$rclone, rclone_sync(remote_name, remote_path, local_path))
+}
 
 # Create data folder if missing
 res <- create_folders(folders$data)
@@ -106,5 +108,7 @@ write.csv(iris, file = file.path(folders$data, 'iris.csv'), row.names = FALSE)
 fs::dir_ls(folders$data)
 
 # Sync files to remote
-with(folders$rclone, rclone_sync(remote_name, local_path, remote_path))
+if ('rclone' %in% names(folders)) {
+  with(folders$rclone, rclone_sync(remote_name, local_path, remote_path))
+}
 ```
