@@ -53,25 +53,37 @@ local_path <- file.path(m365_folders$sharepoint, remote_name, remote_path)
 # Define an alternate data path
 data_path <- normalizePath(file.path(local_path, 'data'), mustWork = FALSE)
 
-# Format remote and local paths for rclone
-remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
-local_path <- fmt_rclone_local_path(local_path)
-
-# Create a list of rclone configuration parameters
-rclone <- tibble::lst(remote_org, remote_name, remote_path, local_path)
-
-# Sync files from remote
-with(rclone, rclone_sync(remote_name, remote_path, local_path))
-
 # Create a default list of folders
 folders <- list(default = get_folders(here::here('conf', 'folders.yml')))
 
-# Add the alternate data path and the rclone parameters to the folders list
-folders[[Sys.info()[['sysname']]]] <- list(data = data_path, rclone = rclone)
+# Add the alternate data path to the folders list
+folders[[Sys.info()[['sysname']]]]$data <- data_path
+
+# +++++++++++++
+# rclone setup
+# +++++++++++++
+#
+# Setup for rclone is optional if you intend to use the OneDrive app instead
+#
+# Format remote and local paths for rclone
+remote_path <- fmt_rclone_remote_path(remote_name, remote_path)
+local_path <- fmt_rclone_local_path(local_path)
+#
+# Create a list of rclone configuration parameters
+rclone <- tibble::lst(remote_org, remote_name, remote_path, local_path)
+#
+# Sync files from remote to confirm the settings are correct (optional)
+with(rclone, rclone_sync(remote_name, remote_path, local_path))
+#
+# Add the rclone parameters to the folders list
+folders[[Sys.info()[['sysname']]]]$rclone <- rclone
+#
+# ++++++++++++++++++++
+# End of rclone setup
+# ++++++++++++++++++++
 
 # Save the modified folder configuration to a new configuration file
-conf <- here::here('conf', 'folders_sp.yml')
-yaml::write_yaml(folders, file = conf)
+yaml::write_yaml(folders, file = here::here('conf', 'folders_sp.yml'))
 ```
 
 ### Example: using rclone after configuration
