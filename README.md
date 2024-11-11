@@ -1,10 +1,13 @@
 # remote.folders
 
-This is an R package for using remote folders with rclone. 
-See also: the {[folders](https://github.com/deohs/folders/)} package. You will 
-also want to [download and install rclone](https://rclone.org/install/). Then 
+This is an R package for using remote folders with rclone and other storage sync tools such as OneDrive app. 
+
+Rclone users will 
+also need to [download and install rclone](https://rclone.org/install/). Then 
 you will want to [configure rclone](https://rclone.org/docs/) for the remotes 
 you intend to use.
+
+See also: the [folders](https://github.com/deohs/folders/) package. 
 
 ## Installation
 
@@ -24,11 +27,11 @@ pacman::p_install_gh("deohs/remote.folders")
 ## Usage
 
 This package is intended to be used with its sister package 
-{[folders](https://github.com/deohs/folders/)} as follows:
+[folders](https://github.com/deohs/folders/) as follows:
 
-### Example: initial rclone setup for an R project
+### Example: initial remote folders setup 
 
-Configure your rclone paths and store them in a configuration file:
+Configure your folder paths and store them in a configuration file:
 
 ```
 # Attach packages, installing as needed
@@ -86,9 +89,9 @@ folders[[Sys.info()[['sysname']]]]$rclone <- rclone
 yaml::write_yaml(folders, file = here::here('conf', 'folders_sp.yml'))
 ```
 
-### Example: using rclone after configuration
+### Example: using remote folders after configuration
 
-Now that there is a configuration file containing your rclone settings, you 
+Now that there is a configuration file containing your settings, you 
 can use code like this in your R scripts:
 
 ```
