@@ -29,10 +29,17 @@
 rclone_sync <- function(remote_name, src, dest, cmd = 'rclone',
                         cmd_args = c('sync', '--update')) {
   if (file.exists(Sys.which(cmd))) {
-    rclone_conf_file <-
+    rclone_conf_path <-
       utils::tail(
         system2(command = cmd, args = c('config', 'file'), stdout = TRUE), 1)
-    if(file.exists(rclone_conf_file)) {
+
+    # Create the rclone config folder if missing
+    rclone_conf_dir <- dirname(rclone_conf_path)
+    if (!dir.exists(rclone_conf_dir)) {
+      dir.create(rclone_conf_dir, recursive = TRUE)
+    }
+
+    if(file.exists(rclone_conf_path)) {
       rclone_remotes <- names(jsonlite::fromJSON(
         system2(command = cmd, args = c('config', 'dump'), stdout = TRUE)
       ))
@@ -47,7 +54,8 @@ rclone_sync <- function(remote_name, src, dest, cmd = 'rclone',
         stop('Abort: Cannot find remote name in configuration file.')
       }
     } else {
-      stop('Abort: Cannot find configuration file.')
+      stop(paste0('Abort: Cannot find configuration file in folder:',
+                  rclone_conf_dir))
     }
   } else {
     stop(paste0("Abort: Cannot find ", cmd, "."))
