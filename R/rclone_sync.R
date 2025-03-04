@@ -54,7 +54,7 @@ rclone_sync <- function(remote_name, src, dest, cmd = 'rclone',
         stop('Abort: Cannot find remote name in configuration file.')
       }
     } else {
-      stop(paste0('Abort: Cannot find configuration file in folder:',
+      stop(paste('Abort: Cannot find configuration file in folder:',
                   rclone_conf_dir))
     }
   } else {
