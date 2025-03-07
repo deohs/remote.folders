@@ -1,6 +1,6 @@
 Package: remote.folders
 Title: Remote Folders
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(person("Brian", "High", email = "bhigh@live.com",
     role = c("aut", "cre")), 
   person("University of Washington", role = c("cph", "fnd")))

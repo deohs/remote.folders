@@ -9,7 +9,7 @@ rclone_sync(
   src,
   dest,
   cmd = "rclone",
-  cmd_args = c("sync", "--update")
+  cmd_args = c("sync", "--update", "--auto-confirm")
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ rclone_sync(
 executable. (Default: 'rclone')}
 
 \item{cmd_args}{(character vector) The rclone command arguments.
-(Default: c('sync', '--update'))}
+(Default: c('sync', '--update', '--auto-confirm'))}
 }
 \value{
 (none or error message) An error message will be returned upon

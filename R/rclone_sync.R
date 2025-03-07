@@ -8,7 +8,7 @@
 #' @param cmd (character) The rclone executable name or the path to the rclone
 #'     executable. (Default: 'rclone')
 #' @param cmd_args (character vector) The rclone command arguments.
-#'     (Default: c('sync', '--update'))
+#'     (Default: c('sync', '--update', '--auto-confirm'))
 #' @return (none or error message) An error message will be returned upon
 #'     error, otherwise nothing is returned.
 #' @keywords rclone
@@ -27,7 +27,7 @@
 #' }
 #' @export
 rclone_sync <- function(remote_name, src, dest, cmd = 'rclone',
-                        cmd_args = c('sync', '--update')) {
+                        cmd_args = c('sync', '--update', '--auto-confirm')) {
   if (file.exists(Sys.which(cmd))) {
     rclone_conf_path <-
       utils::tail(
